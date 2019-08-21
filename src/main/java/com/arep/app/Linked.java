@@ -2,6 +2,9 @@ package com.arep.app;
 
 import java.util.Iterator;
 
+import com.arep.app.Node;
+import com.arep.app.CustomIterator;
+
 /**
  * Linked
  */
@@ -22,9 +25,10 @@ public class Linked<T> implements Iterable<T> {
             empty = false;
             head.setPrior(node);
         }
-        // else{
-        //     head.setPrior(head.getNext());
-        // }
+        else{
+            // head.setPrior(head.getNext());
+            head.getNext().setNext(node);
+        }
         head.setNext(node);
         size++;
     }
@@ -60,62 +64,6 @@ public class Linked<T> implements Iterable<T> {
     }
 
     public Iterator<T> iterator() {
-        return new LinkedIterator<T>(this);
+        return new CustomIterator<T>(this);
     }
-}
-
-class Node<E> {
-    private Node<E> prior;
-    private Node<E> next;
-    private E data;
-
-    public Node(E data) {
-        this.data = data;
-    }
-
-    public E getData() {
-        return this.data;
-    }
-
-    public Node<E> getNext() {
-        return this.next;
-    }
-
-    public Node<E> getPrior() {
-        return prior;
-    }
-
-    public void setPrior(Node<E> prior) {
-        this.prior = prior;
-    }
-
-    public void setNext(Node<E> next) {
-        this.next = next;
-    }
-
-    public void setData(E data) {
-        this.data = data;
-    }
-}
-
-class LinkedIterator<U> implements Iterator<U> {
-    private Node<U> current;
-
-    public LinkedIterator(Linked<U> list) {
-        this.current = list.getHead();
-        System.out.println(current);
-    }
-
-    public boolean hasNext() {
-        System.out.println(current.getNext());
-        return current.getNext() != null;
-    }
-
-    public U next() {
-        U data = current.getData();
-        System.out.println(data);
-        this.current = current.getNext();
-        return data;
-    }
-
 }
